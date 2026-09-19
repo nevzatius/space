@@ -21,6 +21,7 @@ import type { CelestialEvent } from '../types/astronomy';
 export function useCelestialEvents(enabled: boolean) {
   const location = useAppStore((s) => s.location);
   const timeZone = useAppStore((s) => s.timeZone);
+  const language = useAppStore((s) => s.language);
   const [events, setEvents] = useState<CelestialEvent[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -44,18 +45,21 @@ export function useCelestialEvents(enabled: boolean) {
             type: 'satellite',
             date: p.startTime,
             icon: '🛰️',
-            title: `${p.name} Geçişi`,
-            detail: `En yüksek ${p.maxElevationDeg.toFixed(0)}° (${formatLocalTime(p.endTime, timeZone)}'te bitiyor).`,
+            title: language === 'tr' ? `${p.name} Geçişi` : `${p.name} Pass`,
+            detail:
+              language === 'tr'
+                ? `En yüksek ${p.maxElevationDeg.toFixed(0)}° (${formatLocalTime(p.endTime, timeZone)}'te bitiyor).`
+                : `Peaks at ${p.maxElevationDeg.toFixed(0)}° (ends at ${formatLocalTime(p.endTime, timeZone)}).`,
           }),
         ),
       );
 
     Promise.allSettled([
       satellitePassesPromise,
-      Promise.resolve(getUpcomingEclipses(now, astroObserver)),
-      Promise.resolve(getUpcomingConjunctions(now)),
-      Promise.resolve(getUpcomingMeteorShowers(now)),
-      getAuroraForecast(location).then((e) => (e ? [e] : [])),
+      Promise.resolve(getUpcomingEclipses(now, astroObserver, language)),
+      Promise.resolve(getUpcomingConjunctions(now, language)),
+      Promise.resolve(getUpcomingMeteorShowers(now, language)),
+      getAuroraForecast(location, language).then((e) => (e ? [e] : [])),
     ]).then((results) => {
       if (cancelled) return;
       const merged: CelestialEvent[] = [];
@@ -70,7 +74,7 @@ export function useCelestialEvents(enabled: boolean) {
     return () => {
       cancelled = true;
     };
-  }, [enabled, location, timeZone]);
+  }, [enabled, location, timeZone, language]);
 
   return { events, loading };
 }

@@ -19,26 +19,27 @@ export function makeObserver(input: ObserverInput): Astronomy.Observer {
   return new Astronomy.Observer(input.lat, input.lon, input.elevation ?? 0);
 }
 
-const MOON_PHASE_NAMES_TR: Array<{ max: number; name: string }> = [
-  { max: 22.5, name: 'Yeni Ay' },
-  { max: 67.5, name: 'Hilal (Büyüyen)' },
-  { max: 112.5, name: 'İlk Dördün' },
-  { max: 157.5, name: 'Şişkin Ay (Büyüyen)' },
-  { max: 202.5, name: 'Dolunay' },
-  { max: 247.5, name: 'Şişkin Ay (Küçülen)' },
-  { max: 292.5, name: 'Son Dördün' },
-  { max: 337.5, name: 'Hilal (Küçülen)' },
-  { max: 360.01, name: 'Yeni Ay' },
+const MOON_PHASE_NAMES: Array<{ max: number; nameTr: string; nameEn: string }> = [
+  { max: 22.5, nameTr: 'Yeni Ay', nameEn: 'New Moon' },
+  { max: 67.5, nameTr: 'Hilal (Büyüyen)', nameEn: 'Waxing Crescent' },
+  { max: 112.5, nameTr: 'İlk Dördün', nameEn: 'First Quarter' },
+  { max: 157.5, nameTr: 'Şişkin Ay (Büyüyen)', nameEn: 'Waxing Gibbous' },
+  { max: 202.5, nameTr: 'Dolunay', nameEn: 'Full Moon' },
+  { max: 247.5, nameTr: 'Şişkin Ay (Küçülen)', nameEn: 'Waning Gibbous' },
+  { max: 292.5, nameTr: 'Son Dördün', nameEn: 'Last Quarter' },
+  { max: 337.5, nameTr: 'Hilal (Küçülen)', nameEn: 'Waning Crescent' },
+  { max: 360.01, nameTr: 'Yeni Ay', nameEn: 'New Moon' },
 ];
 
 export function getMoonPhase(date: Date): MoonPhaseInfo {
   const phaseAngle = Astronomy.MoonPhase(date);
   const illum = Astronomy.Illumination(Astronomy.Body.Moon, date);
-  const entry = MOON_PHASE_NAMES_TR.find((e) => phaseAngle < e.max) ?? MOON_PHASE_NAMES_TR[MOON_PHASE_NAMES_TR.length - 1];
+  const entry = MOON_PHASE_NAMES.find((e) => phaseAngle < e.max) ?? MOON_PHASE_NAMES[MOON_PHASE_NAMES.length - 1];
   return {
     phaseAngle,
     illumination: illum.phase_fraction,
-    nameTr: entry.name,
+    nameTr: entry.nameTr,
+    nameEn: entry.nameEn,
     waxing: phaseAngle < 180,
   };
 }

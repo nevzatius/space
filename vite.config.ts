@@ -5,4 +5,9 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   base: './',
   plugins: [react()],
+  // satellite.js's WASM worker build uses top-level await, which the default
+  // 'iife' worker output format can't represent — 'es' workers support it.
+  worker: {
+    format: 'es',
+  },
 })

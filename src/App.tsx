@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Header } from './components/layout/Header';
 import { ResponsiveLayout } from './components/layout/ResponsiveLayout';
 import { DateTimePicker } from './components/datetime/DateTimePicker';
@@ -7,10 +8,17 @@ import { ConstellationsPanel } from './components/panels/ConstellationsPanel';
 import { SatellitesPanel } from './components/panels/SatellitesPanel';
 import { SkyViewer } from './components/sky/SkyViewer';
 import { useNow } from './hooks/useNow';
+import { useTranslation } from './i18n/useTranslation';
 import './App.css';
 
 function App() {
   useNow();
+  const { t, language } = useTranslation();
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.title = t.header.title;
+  }, [language, t]);
 
   return (
     <div className="app-shell">

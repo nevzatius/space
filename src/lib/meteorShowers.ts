@@ -5,12 +5,14 @@
 // constellations.json.
 import showers from '../data/meteorShowers.json';
 import type { CelestialEvent } from '../types/astronomy';
+import type { Language } from '../i18n/language';
 
 interface MeteorShowerDef {
   id: string;
   nameTr: string;
   nameLatin: string;
   radiantTr: string;
+  radiantEn: string;
   peakMonth: number;
   peakDay: number;
   zhr: number;
@@ -25,16 +27,22 @@ function nextOccurrence(now: Date, month: number, day: number): Date {
   return candidate;
 }
 
-export function getUpcomingMeteorShowers(now: Date, count = 3): CelestialEvent[] {
+export function getUpcomingMeteorShowers(now: Date, language: Language, count = 3): CelestialEvent[] {
   const events: CelestialEvent[] = (showers as MeteorShowerDef[]).map((shower) => {
     const date = nextOccurrence(now, shower.peakMonth, shower.peakDay);
+    const title =
+      language === 'tr' ? `${shower.nameTr} Meteor Yağmuru` : `${shower.nameLatin} Meteor Shower`;
+    const detail =
+      language === 'tr'
+        ? `Radyant: ${shower.radiantTr} · Tepe saatte ~${shower.zhr} meteor (ideal koşullarda).`
+        : `Radiant: ${shower.radiantEn} · Peak rate ~${shower.zhr} meteors/hour (under ideal conditions).`;
     return {
       id: `meteor-${shower.id}-${date.getFullYear()}`,
       type: 'meteor-shower',
       date,
       icon: '☄️',
-      title: `${shower.nameTr} Meteor Yağmuru`,
-      detail: `Radyant: ${shower.radiantTr} · Tepe saatte ~${shower.zhr} meteor (ideal koşullarda).`,
+      title,
+      detail,
     };
   });
 

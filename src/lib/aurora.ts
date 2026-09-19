@@ -7,6 +7,7 @@ const KP_FORECAST_URL = 'https://services.swpc.noaa.gov/products/noaa-planetary-
 const CACHE_TTL_MS = 2 * 60 * 60 * 1000; // 2h — short-range forecast, no need to persist across sessions
 
 import type { CelestialEvent } from '../types/astronomy';
+import type { Language } from '../i18n/language';
 
 interface CachedForecast {
   fetchedAt: number;
@@ -36,7 +37,7 @@ async function fetchForecastRows(): Promise<string[][]> {
   return rows;
 }
 
-export async function getAuroraForecast(observer: { lat: number }): Promise<CelestialEvent | null> {
+export async function getAuroraForecast(observer: { lat: number }, language: Language): Promise<CelestialEvent | null> {
   try {
     const rows = await fetchForecastRows();
     // First row is the header: ["time_tag", "kp", "observed", "noaa_scale"].
@@ -55,8 +56,11 @@ export async function getAuroraForecast(observer: { lat: number }): Promise<Cele
         type: 'aurora',
         date: new Date(timestamp),
         icon: '🌌',
-        title: 'Olası Aurora (Kutup Işığı)',
-        detail: `NOAA tahminine göre Kp≈${kp} bekleniyor; bulunduğunuz enlemde görülme ihtimali var. 3 günlük kısa vadeli tahmin, kesin değildir.`,
+        title: language === 'tr' ? 'Olası Aurora (Kutup Işığı)' : 'Possible Aurora',
+        detail:
+          language === 'tr'
+            ? `NOAA tahminine göre Kp≈${kp} bekleniyor; bulunduğunuz enlemde görülme ihtimali var. 3 günlük kısa vadeli tahmin, kesin değildir.`
+            : `NOAA forecasts Kp≈${kp}; there's a chance of visibility at your latitude. This is a short-range 3-day forecast, not a certainty.`,
       };
     }
     return null;

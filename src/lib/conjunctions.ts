@@ -4,8 +4,9 @@
 // forward in time and looks for local minima, the same general shape as
 // astro.ts's getUpcomingPath forward-sampling helper.
 import * as Astronomy from 'astronomy-engine';
-import { BODY_NAME_TR } from './bodyNamesTr';
+import { getBodyName } from './bodyNamesTr';
 import type { BodyName, CelestialEvent } from '../types/astronomy';
+import type { Language } from '../i18n/language';
 
 const NAKED_EYE_PLANETS: BodyName[] = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn'];
 const LOOKAHEAD_DAYS = 180;
@@ -18,7 +19,7 @@ function angularSeparationDeg(bodyA: BodyName, bodyB: BodyName, date: Date): num
   return Astronomy.AngleBetween(vecA, vecB);
 }
 
-export function getUpcomingConjunctions(now: Date, count = 3): CelestialEvent[] {
+export function getUpcomingConjunctions(now: Date, language: Language, count = 3): CelestialEvent[] {
   const events: CelestialEvent[] = [];
 
   for (let i = 0; i < NAKED_EYE_PLANETS.length; i++) {
@@ -40,8 +41,14 @@ export function getUpcomingConjunctions(now: Date, count = 3): CelestialEvent[] 
             type: 'conjunction',
             date: prevDate,
             icon: '🪐',
-            title: `${BODY_NAME_TR[bodyA]} – ${BODY_NAME_TR[bodyB]} Kavuşumu`,
-            detail: `Gökyüzünde aralarındaki açısal mesafe ~${prevSeparation.toFixed(1)}° kadar yakınlaşıyor.`,
+            title:
+              language === 'tr'
+                ? `${getBodyName(bodyA, language)} – ${getBodyName(bodyB, language)} Kavuşumu`
+                : `${getBodyName(bodyA, language)}–${getBodyName(bodyB, language)} Conjunction`,
+            detail:
+              language === 'tr'
+                ? `Gökyüzünde aralarındaki açısal mesafe ~${prevSeparation.toFixed(1)}° kadar yakınlaşıyor.`
+                : `They come within ~${prevSeparation.toFixed(1)}° of each other in the sky.`,
           });
           break; // one upcoming conjunction per pair is enough
         }

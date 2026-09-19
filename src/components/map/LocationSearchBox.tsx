@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../../state/appStore';
+import { useTranslation } from '../../i18n/useTranslation';
 
 interface NominatimResult {
   display_name: string;
@@ -9,6 +10,7 @@ interface NominatimResult {
 
 export function LocationSearchBox() {
   const setLocation = useAppStore((s) => s.setLocation);
+  const { t, language } = useTranslation();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<NominatimResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -23,7 +25,7 @@ export function LocationSearchBox() {
     debounceRef.current = setTimeout(async () => {
       setLoading(true);
       try {
-        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=5&accept-language=tr&q=${encodeURIComponent(query)}`;
+        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=5&accept-language=${language}&q=${encodeURIComponent(query)}`;
         const res = await fetch(url, { headers: { Accept: 'application/json' } });
         const data: NominatimResult[] = await res.json();
         setResults(data);
@@ -36,7 +38,7 @@ export function LocationSearchBox() {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [query]);
+  }, [query, language]);
 
   function pickResult(r: NominatimResult) {
     setLocation({ lat: parseFloat(r.lat), lon: parseFloat(r.lon), label: r.display_name });
@@ -49,11 +51,11 @@ export function LocationSearchBox() {
       <input
         type="text"
         className="location-search__input"
-        placeholder="Şehir veya yer ara…"
+        placeholder={t.locationSearch.placeholder}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      {loading && <div className="location-search__status">Aranıyor…</div>}
+      {loading && <div className="location-search__status">{t.locationSearch.searching}</div>}
       {results.length > 0 && (
         <ul className="location-search__results">
           {results.map((r, i) => (

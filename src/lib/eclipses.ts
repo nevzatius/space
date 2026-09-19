@@ -5,6 +5,7 @@
 import * as Astronomy from 'astronomy-engine';
 import { getBodyHorizontal } from './astro';
 import type { CelestialEvent } from '../types/astronomy';
+import type { Language } from '../i18n/language';
 
 const ECLIPSE_KIND_TR: Record<Astronomy.EclipseKind, string> = {
   [Astronomy.EclipseKind.Penumbral]: 'yarı gölge',
@@ -13,31 +14,44 @@ const ECLIPSE_KIND_TR: Record<Astronomy.EclipseKind, string> = {
   [Astronomy.EclipseKind.Total]: 'tam',
 };
 
-export function getUpcomingEclipses(now: Date, observer: Astronomy.Observer): CelestialEvent[] {
+const ECLIPSE_KIND_EN: Record<Astronomy.EclipseKind, string> = {
+  [Astronomy.EclipseKind.Penumbral]: 'penumbral',
+  [Astronomy.EclipseKind.Partial]: 'partial',
+  [Astronomy.EclipseKind.Annular]: 'annular',
+  [Astronomy.EclipseKind.Total]: 'total',
+};
+
+export function getUpcomingEclipses(now: Date, observer: Astronomy.Observer, language: Language): CelestialEvent[] {
   const events: CelestialEvent[] = [];
+  const kindLabel = (kind: Astronomy.EclipseKind) => (language === 'tr' ? ECLIPSE_KIND_TR : ECLIPSE_KIND_EN)[kind];
 
   try {
     const local = Astronomy.SearchLocalSolarEclipse(now, observer);
-    const kindTr = ECLIPSE_KIND_TR[local.kind];
     events.push({
       id: `solar-eclipse-local-${local.peak.time.date.getTime()}`,
       type: 'solar-eclipse',
       date: local.peak.time.date,
       icon: '🌑',
-      title: `Güneş Tutulması (${kindTr})`,
-      detail: 'Bulunduğunuz konumdan görünür.',
+      title:
+        language === 'tr' ? `Güneş Tutulması (${kindLabel(local.kind)})` : `Solar Eclipse (${kindLabel(local.kind)})`,
+      detail: language === 'tr' ? 'Bulunduğunuz konumdan görünür.' : 'Visible from your location.',
     });
 
     const global = Astronomy.SearchGlobalSolarEclipse(now);
     if (global.peak.date.getTime() !== local.peak.time.date.getTime()) {
-      const globalKindTr = ECLIPSE_KIND_TR[global.kind];
       events.push({
         id: `solar-eclipse-global-${global.peak.date.getTime()}`,
         type: 'solar-eclipse',
         date: global.peak.date,
         icon: '🌑',
-        title: `Güneş Tutulması (${globalKindTr})`,
-        detail: 'Dünyanın başka bir bölgesinden görünür; bu konumdan görünmeyebilir.',
+        title:
+          language === 'tr'
+            ? `Güneş Tutulması (${kindLabel(global.kind)})`
+            : `Solar Eclipse (${kindLabel(global.kind)})`,
+        detail:
+          language === 'tr'
+            ? 'Dünyanın başka bir bölgesinden görünür; bu konumdan görünmeyebilir.'
+            : 'Visible from another part of the world; may not be visible from this location.',
       });
     }
   } catch {
@@ -46,7 +60,6 @@ export function getUpcomingEclipses(now: Date, observer: Astronomy.Observer): Ce
 
   try {
     const lunar = Astronomy.SearchLunarEclipse(now);
-    const kindTr = ECLIPSE_KIND_TR[lunar.kind];
     const moonAltitude = getBodyHorizontal('Moon', lunar.peak.date, observer).altitude;
     const visible = moonAltitude > 0;
     events.push({
@@ -54,8 +67,15 @@ export function getUpcomingEclipses(now: Date, observer: Astronomy.Observer): Ce
       type: 'lunar-eclipse',
       date: lunar.peak.date,
       icon: '🌕',
-      title: `Ay Tutulması (${kindTr})`,
-      detail: visible ? 'Bulunduğunuz konumdan görünür (Ay ufkun üzerinde).' : 'Bu saatte Ay ufkun altında; bu konumdan görünmez.',
+      title: language === 'tr' ? `Ay Tutulması (${kindLabel(lunar.kind)})` : `Lunar Eclipse (${kindLabel(lunar.kind)})`,
+      detail:
+        language === 'tr'
+          ? visible
+            ? 'Bulunduğunuz konumdan görünür (Ay ufkun üzerinde).'
+            : 'Bu saatte Ay ufkun altında; bu konumdan görünmez.'
+          : visible
+            ? 'Visible from your location (the Moon is above the horizon).'
+            : 'The Moon is below the horizon at this time; not visible from this location.',
     });
   } catch {
     // No lunar eclipse found — skip.

@@ -1,9 +1,10 @@
-import { azimuthToCompassTr } from '../../lib/coords';
+import { azimuthToCompass } from '../../lib/coords';
+import { useTranslation } from '../../i18n/useTranslation';
 import './CompassHud.css';
 
 const TICKS = Array.from({ length: 24 }, (_, i) => i * 15);
 
-const CARDINALS: Array<{ deg: number; label: string; major?: boolean }> = [
+const CARDINALS_TR: Array<{ deg: number; label: string; major?: boolean }> = [
   { deg: 0, label: 'K', major: true },
   { deg: 45, label: 'KD' },
   { deg: 90, label: 'D', major: true },
@@ -14,6 +15,17 @@ const CARDINALS: Array<{ deg: number; label: string; major?: boolean }> = [
   { deg: 315, label: 'KB' },
 ];
 
+const CARDINALS_EN: Array<{ deg: number; label: string; major?: boolean }> = [
+  { deg: 0, label: 'N', major: true },
+  { deg: 45, label: 'NE' },
+  { deg: 90, label: 'E', major: true },
+  { deg: 135, label: 'SE' },
+  { deg: 180, label: 'S', major: true },
+  { deg: 225, label: 'SW' },
+  { deg: 270, label: 'W', major: true },
+  { deg: 315, label: 'NW' },
+];
+
 /**
  * HUD compass rose overlaid on the sky viewer. The ring carries the fixed
  * cardinal directions and rotates opposite the camera heading, while the
@@ -21,7 +33,10 @@ const CARDINALS: Array<{ deg: number; label: string; major?: boolean }> = [
  * which way the camera is currently looking.
  */
 export function CompassHud({ headingDeg }: { headingDeg: number }) {
-  const point = azimuthToCompassTr(headingDeg);
+  const { language } = useTranslation();
+  const point = azimuthToCompass(headingDeg, language);
+  const northLabel = language === 'tr' ? 'K' : 'N';
+  const CARDINALS = language === 'tr' ? CARDINALS_TR : CARDINALS_EN;
 
   return (
     <div className="compass-hud" aria-hidden>
@@ -38,7 +53,7 @@ export function CompassHud({ headingDeg }: { headingDeg: number }) {
           {CARDINALS.map(({ deg, label, major }) => (
             <span
               key={label}
-              className={`compass-hud__label${major ? ' compass-hud__label--major' : ''}${label === 'K' ? ' compass-hud__label--north' : ''}`}
+              className={`compass-hud__label${major ? ' compass-hud__label--major' : ''}${label === northLabel ? ' compass-hud__label--north' : ''}`}
               style={{ transform: `rotate(${deg}deg) translateY(-35px) rotate(${headingDeg - deg}deg)` }}
             >
               {label}

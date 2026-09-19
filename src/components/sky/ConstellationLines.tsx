@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import type { ThreeEvent } from '@react-three/fiber';
 import { altAzToCartesian } from '../../lib/coords';
 import { getStarVisibility } from '../../lib/skyPhysics';
+import { useTranslation } from '../../i18n/useTranslation';
 import type { ConstellationRenderData } from '../../hooks/useAstroState';
 
 const DOME_RADIUS = 100;
@@ -12,14 +13,14 @@ const BELOW_HORIZON_MARGIN = 5;
 
 export interface ConstellationHoverInfo {
   code: string;
-  nameTr: string;
+  name: string;
   offsetX: number;
   offsetY: number;
 }
 
 interface ConstellationLineItem {
   code: string;
-  nameTr: string;
+  name: string;
   positions: Float32Array;
 }
 
@@ -49,14 +50,16 @@ export function ConstellationLines({
   onHover: (info: ConstellationHoverInfo | null) => void;
   onSelect: (code: string) => void;
 }) {
+  const { language } = useTranslation();
   const dayFade = getStarVisibility(sunAltitude);
   const items: ConstellationLineItem[] = useMemo(
     () =>
       constellations.flatMap((c) => {
         const positions = buildPositions(c);
-        return positions ? [{ code: c.code, nameTr: c.nameTr, positions }] : [];
+        const name = language === 'tr' ? c.nameTr : c.nameLatin;
+        return positions ? [{ code: c.code, name, positions }] : [];
       }),
-    [constellations],
+    [constellations, language],
   );
 
   return (
@@ -71,7 +74,7 @@ export function ConstellationLines({
             key={item.code}
             onPointerMove={(e: ThreeEvent<PointerEvent>) => {
               e.stopPropagation();
-              onHover({ code: item.code, nameTr: item.nameTr, offsetX: e.nativeEvent.offsetX, offsetY: e.nativeEvent.offsetY });
+              onHover({ code: item.code, name: item.name, offsetX: e.nativeEvent.offsetX, offsetY: e.nativeEvent.offsetY });
             }}
             onPointerOut={(e: ThreeEvent<PointerEvent>) => {
               e.stopPropagation();

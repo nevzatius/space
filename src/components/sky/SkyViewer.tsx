@@ -96,7 +96,7 @@ export function SkyViewer() {
   const visibleSatellites = showSatellites ? satellitePositions.filter((s) => s.aboveHorizon && s.sunlit) : [];
 
   const tooltip = hoverConstellation
-    ? { label: hoverConstellation.nameTr, offsetX: hoverConstellation.offsetX, offsetY: hoverConstellation.offsetY }
+    ? { label: hoverConstellation.name, offsetX: hoverConstellation.offsetX, offsetY: hoverConstellation.offsetY }
     : hoverBody;
 
   const handleBodyHover = (label: string, offsetX: number, offsetY: number) => setHoverBody({ label, offsetX, offsetY });

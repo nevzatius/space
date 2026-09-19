@@ -3,8 +3,9 @@ import * as THREE from 'three';
 import type { ThreeEvent } from '@react-three/fiber';
 import { altAzToCartesian } from '../../lib/coords';
 import { getGlowSpriteTexture } from '../../lib/textures';
-import { BODY_NAME_TR } from '../../lib/bodyNamesTr';
+import { getBodyName } from '../../lib/bodyNamesTr';
 import { getExtinctionFactor, getExtinctionTint, getStarVisibility } from '../../lib/skyPhysics';
+import { useTranslation } from '../../i18n/useTranslation';
 import type { BodyName } from '../../types/astronomy';
 
 const DOME_RADIUS = 100;
@@ -36,6 +37,7 @@ export function CelestialBody({
   onHover?: (label: string, offsetX: number, offsetY: number) => void;
   onHoverEnd?: () => void;
 }) {
+  const { language } = useTranslation();
   const texture = useMemo(() => getGlowSpriteTexture(), []);
   const position = useMemo<[number, number, number]>(
     () => altAzToCartesian(altitude, azimuth, DOME_RADIUS),
@@ -58,7 +60,7 @@ export function CelestialBody({
       scale={[scale, scale, scale]}
       onPointerMove={(e: ThreeEvent<PointerEvent>) => {
         e.stopPropagation();
-        onHover?.(BODY_NAME_TR[body], e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        onHover?.(getBodyName(body, language), e.nativeEvent.offsetX, e.nativeEvent.offsetY);
       }}
       onPointerOut={(e: ThreeEvent<PointerEvent>) => {
         e.stopPropagation();

@@ -1,34 +1,36 @@
 import { useAstroState } from '../../hooks/useAstroState';
 import { useAppStore } from '../../state/appStore';
-import { BODY_NAME_TR } from '../../lib/bodyNamesTr';
-import { azimuthToCompassTr } from '../../lib/coords';
+import { getBodyName } from '../../lib/bodyNamesTr';
+import { azimuthToCompass } from '../../lib/coords';
 import { formatLocalTime } from '../../lib/timezone';
+import { useTranslation } from '../../i18n/useTranslation';
 import './BodyEventsPanel.css';
 
 export function BodyEventsPanel() {
   const { riseSet, recommendedBodies } = useAstroState();
   const timeZone = useAppStore((s) => s.timeZone);
+  const { t, language } = useTranslation();
   const recommendedBodyNames = new Set(recommendedBodies.map((b) => b.body));
 
   return (
     <div className="body-events">
-      <h3>Doğuş / Batış</h3>
+      <h3>{t.bodyEvents.title}</h3>
       <table className="body-events__table">
         <thead>
           <tr>
-            <th>Cisim</th>
-            <th>Doğuş</th>
-            <th>Batış</th>
-            <th>Tepe noktası</th>
+            <th>{t.bodyEvents.body}</th>
+            <th>{t.bodyEvents.rise}</th>
+            <th>{t.bodyEvents.set}</th>
+            <th>{t.bodyEvents.transit}</th>
           </tr>
         </thead>
         <tbody>
           {riseSet.map((r) => (
             <tr key={r.body}>
               <td>
-                {BODY_NAME_TR[r.body]}
+                {getBodyName(r.body, language)}
                 {recommendedBodyNames.has(r.body) && (
-                  <span className="body-events__visible-badge" title="Şu an bu ışık kirliliğinde görünür">
+                  <span className="body-events__visible-badge" title={t.bodyEvents.visibleNow}>
                     {' '}
                     👁
                   </span>
@@ -36,11 +38,15 @@ export function BodyEventsPanel() {
               </td>
               <td>
                 {formatLocalTime(r.riseTime, timeZone)}
-                {r.riseAzimuth !== null && <span className="body-events__dir"> ({azimuthToCompassTr(r.riseAzimuth)})</span>}
+                {r.riseAzimuth !== null && (
+                  <span className="body-events__dir"> ({azimuthToCompass(r.riseAzimuth, language)})</span>
+                )}
               </td>
               <td>
                 {formatLocalTime(r.setTime, timeZone)}
-                {r.setAzimuth !== null && <span className="body-events__dir"> ({azimuthToCompassTr(r.setAzimuth)})</span>}
+                {r.setAzimuth !== null && (
+                  <span className="body-events__dir"> ({azimuthToCompass(r.setAzimuth, language)})</span>
+                )}
               </td>
               <td>{formatLocalTime(r.transitTime, timeZone)}</td>
             </tr>

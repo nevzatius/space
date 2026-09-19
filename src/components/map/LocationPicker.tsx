@@ -6,6 +6,7 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import 'leaflet/dist/leaflet.css';
 import { useAppStore } from '../../state/appStore';
+import { useTranslation } from '../../i18n/useTranslation';
 import { LocationSearchBox } from './LocationSearchBox';
 import './LocationPicker.css';
 
@@ -39,6 +40,7 @@ function RecenterOnLocation({ lat, lon }: { lat: number; lon: number }) {
 
 export function LocationPicker() {
   const location = useAppStore((s) => s.location);
+  const { t } = useTranslation();
 
   return (
     <div className="location-picker">
@@ -46,7 +48,7 @@ export function LocationPicker() {
       <div className="location-picker__map">
         <MapContainer center={[location.lat, location.lon]} zoom={5} scrollWheelZoom style={{ height: '100%', width: '100%' }}>
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> katkıda bulunanlar'
+            attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> ${t.locationPicker.attribution}`}
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <ClickHandler />
@@ -55,7 +57,7 @@ export function LocationPicker() {
         </MapContainer>
       </div>
       <p className="location-picker__hint">
-        Konum seçmek için haritaya tıklayın. Seçili konum: <strong>{location.label}</strong>
+        {t.locationPicker.hint} <strong>{location.label}</strong>
       </p>
     </div>
   );

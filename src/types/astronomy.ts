@@ -44,6 +44,7 @@ export interface MoonPhaseInfo {
   phaseAngle: number;
   illumination: number;
   nameTr: string;
+  nameEn: string;
   waxing: boolean;
 }
 

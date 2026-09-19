@@ -1,59 +1,65 @@
-# 🌌 Gece Gökyüzü Simülatörü
+<div align="center">
 
-Konumunuza ve seçtiğiniz tarih/saate göre gerçek zamanlı, 3 boyutlu gece gökyüzünü
-tarayıcınızda canlandıran bir web uygulaması. Yıldızlar, takımyıldızlar, Ay, Güneş,
-gezegenler ve yapay uydular gerçek astronomik hesaplamalarla konumlandırılır.
+# 🌌 Night Sky Simulator
 
-## Özellikler
+**A real-time, 3D night sky you can explore from any place, date, and time — right in your browser.**
 
-- **3B gökyüzü görünümü** — Three.js tabanlı, pusula yönü ve yatay/dikey açıya göre
-  gezinilebilen etkileşimli gök küresi.
-- **Gerçek yıldız kataloğu** — HYG veri setinden türetilmiş, parlaklık ve renge göre
-  render edilen binlerce yıldız.
-- **Takımyıldızlar** — çizgiler ve çok dilli (Türkçe dahil) isimlendirme.
-- **Ay, Güneş ve gezegenler** — anlık evre, doğuş/batış saatleri ve gökyüzündeki
-  konumlarıyla birlikte; Ay için yakın-yörünge "Aya Yaklaş" kamera modu.
-- **Uydu takibi** — ISS dahil çıplak gözle görülebilen uyduların gerçek zamanlı TLE
-  verileriyle SGP4/SDP4 yörünge yayılımı.
-- **Gök olayları** — kavuşumlar, tutulmalar ve meteor yağmurları için yaklaşan olay
-  bildirimleri.
-- **Konum seçimi** — harita üzerinden konum seçme, arama kutusu ve otomatik konum
-  algılama; ışık kirliliği haritasıyla gökyüzü görünürlüğü tahmini.
-- **Tarih/saat kontrolü** — istenilen tarih ve saate ışınlanarak geçmiş/gelecek
-  gökyüzünü inceleme.
+[🇬🇧 English](README.md) · [🇹🇷 Türkçe](README.tr.md)
 
-## Teknoloji Yığını
+[![Live Demo](https://img.shields.io/badge/demo-live-4c9aff)](https://nevzatius.github.io/space/)
+[![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178c6)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8-646cff)](https://vite.dev/)
+[![Three.js](https://img.shields.io/badge/Three.js-r186-black)](https://threejs.org/)
+
+**[▶ Try it live](https://nevzatius.github.io/space/)**
+
+</div>
+
+---
+
+## Overview
+
+Night Sky Simulator renders an astronomically accurate view of the sky based on real orbital mechanics — not a static star map. Pick any location on Earth and any date/time (past, present, or future), and the app computes where every star, planet, and the Moon actually are, in real time, using [astronomy-engine](https://github.com/cosinekitty/astronomy).
+
+## Features
+
+- **3D interactive sky dome** — drag to look around; a live compass HUD tracks your heading.
+- **Real star catalog** — thousands of stars rendered by true brightness and color, from the HYG catalog.
+- **Constellations** — accurate line art and localized names (English/Turkish), clickable for details.
+- **Sun, Moon & planets** — live phase, illumination, rise/set/transit times, and true sky position; a close-orbit "Approach Moon" camera mode with a high-resolution lunar texture.
+- **Satellite tracking** — real-time TLE data for naked-eye-visible satellites (including the ISS), propagated with SGP4/SDP4.
+- **Sky events** — upcoming conjunctions, eclipses, meteor showers, and aurora alerts.
+- **Location tools** — device GPS, IP-based lookup, or pick-on-map/search, plus a light-pollution (Bortle scale) estimate for your sky.
+- **Time travel** — scrub to any date/time to preview past or future skies.
+- **Bilingual UI** — full English/Turkish interface, switchable at runtime.
+
+## Tech Stack
 
 - [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vite.dev/) — geliştirme sunucusu ve derleme
-- [Three.js](https://threejs.org/) / [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber) / [@react-three/drei](https://github.com/pmndrs/drei)
-- [astronomy-engine](https://github.com/cosinekitty/astronomy) — Güneş, Ay, gezegen
-  konumları ve gök olayı hesaplamaları
-- [satellite.js](https://github.com/shashwatak/satellite-js) — uydu yörünge hesabı
-- [react-leaflet](https://react-leaflet.js.org/) — konum haritası
-- [zustand](https://github.com/pmndrs/zustand) — uygulama durum yönetimi
-- [luxon](https://moment.github.io/luxon/) / [tz-lookup](https://www.npmjs.com/package/tz-lookup) — tarih, saat ve saat dilimi işlemleri
+- [Vite](https://vite.dev/) — dev server & build
+- [Three.js](https://threejs.org/) via [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber) / [@react-three/drei](https://github.com/pmndrs/drei)
+- [astronomy-engine](https://github.com/cosinekitty/astronomy) — Sun/Moon/planet positions and sky-event calculations
+- [satellite.js](https://github.com/shashwatak/satellite-js) — satellite orbit propagation
+- [react-leaflet](https://react-leaflet.js.org/) — location map
+- [zustand](https://github.com/pmndrs/zustand) — app state
+- [luxon](https://moment.github.io/luxon/) / [tz-lookup](https://www.npmjs.com/package/tz-lookup) — date, time & time zone handling
 
-## Başlarken
+## Getting Started
 
-### Gereksinimler
+### Prerequisites
 
-- [Node.js](https://nodejs.org/) 20 veya üzeri
+- [Node.js](https://nodejs.org/) 20+
 - npm
 
-### Kurulum
+### Install & run
 
 ```bash
 npm install
-```
-
-### Geliştirme sunucusu
-
-```bash
 npm run dev
 ```
 
-### Prodüksiyon derlemesi
+### Production build
 
 ```bash
 npm run build
@@ -66,31 +72,33 @@ npm run preview
 npm run lint
 ```
 
-### Veri kataloglarını yeniden üretme
+### Regenerating data catalogs
 
-Yıldız/takımyıldız kataloğu ve ışık kirliliği haritası ham veri setlerinden
-üretilir; normal geliştirme akışında bu adımlara gerek yoktur, yalnızca ham veriler
-güncellendiğinde çalıştırılır:
+The star/constellation catalog and light-pollution map are generated from raw open datasets. You won't need this for normal development — only when the raw source data changes:
 
 ```bash
 npm run build:catalog
 npm run build:lightpollution
 ```
 
-## Proje Yapısı
+## Project Structure
 
 ```
 src/
-  components/   UI bileşenleri (gökyüzü görünümü, panel, harita, menü, tarih/saat)
-  data/         Üretilmiş yıldız/takımyıldız/uydu veri dosyaları
-  hooks/        React hook'ları (canlı saat, uydu, gök olayları vb.)
-  lib/          Astronomik hesaplama ve yardımcı fonksiyonlar
-  state/        Zustand ile global uygulama durumu
-  types/        Paylaşılan TypeScript tipleri
-scripts/        Ham veri setlerinden katalog üreten build script'leri
+  components/   UI components (sky view, panels, map, menus, date/time)
+  data/         Generated star/constellation/satellite data files
+  hooks/        React hooks (live clock, satellites, sky events, …)
+  i18n/         English/Turkish translation dictionaries and language state
+  lib/          Astronomical calculations and utilities
+  state/        Zustand global app state
+  types/        Shared TypeScript types
+scripts/        Build scripts that generate catalogs from raw datasets
 ```
 
-## Veri Kaynakları ve Lisanslar
+## Data Sources & Licensing
 
-Kullanılan açık kaynaklı veri setleri, kütüphaneler ve lisans bilgileri için
-[CREDITS.md](CREDITS.md) dosyasına bakın.
+See [CREDITS.md](CREDITS.md) for the open datasets, libraries, and license terms this project builds on (HYG catalog, d3-celestial, astronomy-engine, satellite.js, CelesTrak, Solar System Scope textures).
+
+## Deployment
+
+Pushes to `master` automatically build and deploy to GitHub Pages via [.github/workflows/deploy.yml](.github/workflows/deploy.yml).

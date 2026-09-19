@@ -33,10 +33,10 @@ export function formatLocalTime(date: Date | null, zone: string): string {
   return DateTime.fromJSDate(date, { zone: 'utc' }).setZone(zone).toFormat('HH:mm');
 }
 
-/** Formats a UTC Date as a "d MMM, HH:mm" string (Turkish month names) in the given zone, or a placeholder if null. */
-export function formatLocalDateTime(date: Date | null, zone: string): string {
+/** Formats a UTC Date as a "d MMM, HH:mm" string (localized month names) in the given zone, or a placeholder if null. */
+export function formatLocalDateTime(date: Date | null, zone: string, locale: string = 'tr'): string {
   if (!date) return '—';
-  return DateTime.fromJSDate(date, { zone: 'utc' }).setZone(zone).setLocale('tr').toFormat('d MMM, HH:mm');
+  return DateTime.fromJSDate(date, { zone: 'utc' }).setZone(zone).setLocale(locale).toFormat('d MMM, HH:mm');
 }
 
 /** Splits a UTC Date back into local wall-clock date/time strings for a zone. */

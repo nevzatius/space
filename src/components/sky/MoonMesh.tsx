@@ -4,6 +4,8 @@ import { useLoader } from '@react-three/fiber';
 import type { ThreeEvent } from '@react-three/fiber';
 import { altAzToCartesian } from '../../lib/coords';
 import { getExtinctionFactor, getExtinctionTint } from '../../lib/skyPhysics';
+import { getBodyName } from '../../lib/bodyNamesTr';
+import { useTranslation } from '../../i18n/useTranslation';
 
 export const MOON_DISTANCE = 40; // closer than the star dome so it reads as a visible disc
 const MOON_RADIUS = 1.6;
@@ -33,6 +35,7 @@ export function MoonMesh({
   onHoverEnd?: () => void;
   onClick?: () => void;
 }) {
+  const { language } = useTranslation();
   const position = useMemo<[number, number, number]>(
     () => altAzToCartesian(altitude, azimuth, MOON_DISTANCE),
     [altitude, azimuth],
@@ -72,7 +75,7 @@ export function MoonMesh({
         position={position}
         onPointerMove={(e: ThreeEvent<PointerEvent>) => {
           e.stopPropagation();
-          onHover?.('Ay', e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+          onHover?.(getBodyName('Moon', language), e.nativeEvent.offsetX, e.nativeEvent.offsetY);
         }}
         onPointerOut={(e: ThreeEvent<PointerEvent>) => {
           e.stopPropagation();

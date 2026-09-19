@@ -28,12 +28,20 @@ export function radToDeg(rad: number): number {
 }
 
 const COMPASS_POINTS_TR = ['K', 'KD', 'D', 'GD', 'G', 'GB', 'B', 'KB'];
+const COMPASS_POINTS_EN = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 
 /** Maps an azimuth (degrees, 0=north/clockwise) to an 8-point Turkish compass label. */
 export function azimuthToCompassTr(azimuthDeg: number): string {
   const normalized = ((azimuthDeg % 360) + 360) % 360;
   const index = Math.round(normalized / 45) % 8;
   return COMPASS_POINTS_TR[index];
+}
+
+/** Maps an azimuth (degrees, 0=north/clockwise) to an 8-point compass label in the given language. */
+export function azimuthToCompass(azimuthDeg: number, language: 'tr' | 'en'): string {
+  const normalized = ((azimuthDeg % 360) + 360) % 360;
+  const index = Math.round(normalized / 45) % 8;
+  return (language === 'tr' ? COMPASS_POINTS_TR : COMPASS_POINTS_EN)[index];
 }
 
 /** Circular mean of a list of azimuths (degrees), avoiding the 359/1 wraparound bug. */

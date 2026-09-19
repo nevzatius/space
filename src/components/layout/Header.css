@@ -43,3 +43,18 @@
   color: #ffcc55;
   font-size: 0.8em;
 }
+
+.app-header__lang-toggle {
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #181b22;
+  color: #eee;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.app-header__lang-toggle:hover {
+  background: #20232c;
+}

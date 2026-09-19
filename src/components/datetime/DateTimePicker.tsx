@@ -1,8 +1,10 @@
 import { useAppStore } from '../../state/appStore';
 import { combineToUtcDate, splitFromUtcDate } from '../../lib/timezone';
+import { useTranslation } from '../../i18n/useTranslation';
 import './DateTimePicker.css';
 
 export function DateTimePicker() {
+  const { t } = useTranslation();
   const dateTimeUtc = useAppStore((s) => s.dateTimeUtc);
   const timeZone = useAppStore((s) => s.timeZone);
   const useLiveNow = useAppStore((s) => s.useLiveNow);
@@ -24,7 +26,7 @@ export function DateTimePicker() {
     <div className="datetime-picker">
       <label className="datetime-picker__live">
         <input type="checkbox" checked={useLiveNow} onChange={(e) => setUseLiveNow(e.target.checked)} />
-        Şimdi (canlı)
+        {t.dateTime.liveNow}
       </label>
       <div className="datetime-picker__row">
         <input type="date" value={isoDate} disabled={useLiveNow} onChange={(e) => onDateChange(e.target.value)} />
@@ -32,7 +34,7 @@ export function DateTimePicker() {
       </div>
       <div className="datetime-picker__tz">
         <label>
-          Saat dilimi:
+          {t.dateTime.timeZone}
           <input type="text" value={timeZone} onChange={(e) => setTimeZone(e.target.value)} />
         </label>
       </div>

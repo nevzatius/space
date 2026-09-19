@@ -13,10 +13,13 @@ const LIGHT_DISTANCE = 20;
 
 // Real lunar albedo map (NASA Clementine-derived mosaic, public domain), sourced
 // from three.js's own example assets — see public/textures/NOTICE.md.
-const MOON_TEXTURE_URL = '/textures/moon-albedo.jpg';
+// Built from BASE_URL (not a hardcoded leading slash) so it still resolves
+// correctly when the app is deployed under a subpath, e.g. GitHub Pages
+// project sites (username.github.io/repo/) rather than a domain root.
+const MOON_TEXTURE_URL = `${import.meta.env.BASE_URL}textures/moon-albedo.jpg`;
 // Higher-resolution map (Solar System Scope, CC BY 4.0) swapped in for the
 // close-orbit "Aya Yaklaş" mode, where the low-res map would look blurry.
-const MOON_TEXTURE_HIRES_URL = '/textures/moon-albedo-hires.jpg';
+const MOON_TEXTURE_HIRES_URL = `${import.meta.env.BASE_URL}textures/moon-albedo-hires.jpg`;
 
 export function MoonMesh({
   azimuth,

@@ -1,0 +1,23 @@
+.moon-phase-widget {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.moon-phase-widget__icon {
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.moon-phase-widget__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.moon-phase-widget__info span {
+  color: #99a;
+  font-size: 0.8rem;
+}

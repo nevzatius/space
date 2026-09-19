@@ -1,0 +1,93 @@
+.upcoming-events {
+  position: absolute;
+  top: 100%;
+  right: 1.25rem;
+  z-index: 1100;
+  margin-top: 0.5rem;
+  background: #12141b;
+  border: 1px solid #23262f;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 380px;
+  max-width: calc(100vw - 2.5rem);
+}
+
+.upcoming-events h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #eee;
+}
+
+.upcoming-events__status {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #99a;
+}
+
+.upcoming-events__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.upcoming-events__list li {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid #23262f;
+}
+
+.upcoming-events__list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.upcoming-events__icon {
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.upcoming-events__body {
+  min-width: 0;
+}
+
+.upcoming-events__title {
+  font-size: 0.85rem;
+  color: #eee;
+}
+
+.upcoming-events__date {
+  font-size: 0.8rem;
+  color: #ffcc55;
+}
+
+.upcoming-events__detail {
+  font-size: 0.75rem;
+  color: #99a;
+  line-height: 1.35;
+}
+
+.upcoming-events__close {
+  align-self: flex-end;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #181b22;
+  color: #ccc;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.upcoming-events__close:hover {
+  background: #20232c;
+}

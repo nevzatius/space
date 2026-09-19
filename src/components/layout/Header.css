@@ -1,0 +1,45 @@
+.app-header {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid #23262f;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: #eee;
+}
+
+.app-header p {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  color: #99a;
+}
+
+.app-header__location-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #181b22;
+  color: #eee;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.app-header__location-toggle:hover {
+  background: #20232c;
+}
+
+.app-header__bortle {
+  color: #ffcc55;
+  font-size: 0.8em;
+}

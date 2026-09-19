@@ -1,0 +1,101 @@
+.compass-hud {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+.compass-hud__stage {
+  position: relative;
+  width: 104px;
+  height: 104px;
+}
+
+.compass-hud__pointer {
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 9px solid #ffcc55;
+  filter: drop-shadow(0 0 3px rgba(255, 204, 85, 0.6));
+  z-index: 1;
+}
+
+.compass-hud__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(12, 14, 20, 0.55);
+  border: 1px solid #333a48;
+  backdrop-filter: blur(2px);
+  transition: transform 0.05s linear;
+}
+
+.compass-hud__tick {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 8px;
+  transform-origin: top center;
+  background: #5a6478;
+}
+
+.compass-hud__tick--major {
+  height: 12px;
+  width: 2px;
+  background: #7fa8ff;
+}
+
+.compass-hud__label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: top center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #7fa8ff;
+  margin-left: -0.6em;
+  width: 1.2em;
+  text-align: center;
+}
+
+.compass-hud__label--major {
+  font-size: 0.72rem;
+}
+
+.compass-hud__label--north {
+  color: #ffcc55;
+}
+
+.compass-hud__readout {
+  display: flex;
+  gap: 0.35rem;
+  align-items: baseline;
+  white-space: nowrap;
+  background: rgba(12, 14, 20, 0.6);
+  border: 1px solid #333a48;
+  border-radius: 6px;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.72rem;
+}
+
+.compass-hud__readout-deg {
+  color: #e6e6ea;
+  font-variant-numeric: tabular-nums;
+}
+
+.compass-hud__readout-point {
+  color: #ffcc55;
+  font-weight: 600;
+}

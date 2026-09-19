@@ -1,0 +1,12 @@
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.card {
+  background: #12141b;
+  border: 1px solid #23262f;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+}

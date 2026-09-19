@@ -1,0 +1,62 @@
+.satellites-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.satellites-panel__header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #cdd;
+}
+
+.satellites-panel__toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: #99a;
+  cursor: pointer;
+  user-select: none;
+}
+
+.satellites-panel__status {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  color: #889;
+}
+
+.satellites-panel__status--error {
+  color: #e08a5c;
+}
+
+.satellites-panel__empty {
+  color: #889;
+  font-size: 0.85rem;
+}
+
+.satellites-panel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.satellites-panel__list li {
+  padding: 0.35rem 0.4rem;
+  font-size: 0.85rem;
+  color: #ddd;
+}
+
+.satellites-panel__visible-badge {
+  font-size: 0.8em;
+  margin-right: 0.15rem;
+}
+
+.satellites-panel__dir {
+  color: #8aa;
+  font-size: 0.8em;
+}

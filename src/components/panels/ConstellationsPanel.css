@@ -1,0 +1,50 @@
+.constellations-panel h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  color: #cdd;
+}
+
+.constellations-panel__subtitle {
+  margin: -0.3rem 0 0.5rem;
+  font-size: 0.78rem;
+  color: #889;
+}
+
+.constellations-panel__empty {
+  color: #889;
+  font-size: 0.85rem;
+}
+
+.constellations-panel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.constellations-panel__list button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #ddd;
+  padding: 0.35rem 0.4rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.constellations-panel__list button:hover {
+  background: #1c1f27;
+}
+
+.constellations-panel__list button.is-selected {
+  background: #33291a;
+  color: #ffcc55;
+}
+
+.constellations-panel__dir {
+  color: #8aa;
+  font-size: 0.8em;
+}

@@ -1,0 +1,14 @@
+[
+  { "id": "quadrantids", "nameTr": "Kuadrantidler", "nameLatin": "Quadrantids", "radiantTr": "Çizmeci (Boötes)", "peakMonth": 1, "peakDay": 3, "zhr": 110 },
+  { "id": "lyrids", "nameTr": "Liridler", "nameLatin": "Lyrids", "radiantTr": "Lir (Lyra)", "peakMonth": 4, "peakDay": 22, "zhr": 18 },
+  { "id": "eta-aquariids", "nameTr": "Eta Aquaridler", "nameLatin": "Eta Aquariids", "radiantTr": "Kova (Aquarius)", "peakMonth": 5, "peakDay": 6, "zhr": 50 },
+  { "id": "s-delta-aquariids", "nameTr": "Güney Delta Aquaridler", "nameLatin": "Southern Delta Aquariids", "radiantTr": "Kova (Aquarius)", "peakMonth": 7, "peakDay": 30, "zhr": 25 },
+  { "id": "perseids", "nameTr": "Perseidler", "nameLatin": "Perseids", "radiantTr": "Perseus", "peakMonth": 8, "peakDay": 12, "zhr": 100 },
+  { "id": "draconids", "nameTr": "Draconidler", "nameLatin": "Draconids", "radiantTr": "Ejderha (Draco)", "peakMonth": 10, "peakDay": 8, "zhr": 10 },
+  { "id": "orionids", "nameTr": "Orionidler", "nameLatin": "Orionids", "radiantTr": "Orion", "peakMonth": 10, "peakDay": 21, "zhr": 20 },
+  { "id": "s-taurids", "nameTr": "Güney Tauridler", "nameLatin": "Southern Taurids", "radiantTr": "Boğa (Taurus)", "peakMonth": 11, "peakDay": 5, "zhr": 5 },
+  { "id": "n-taurids", "nameTr": "Kuzey Tauridler", "nameLatin": "Northern Taurids", "radiantTr": "Boğa (Taurus)", "peakMonth": 11, "peakDay": 12, "zhr": 5 },
+  { "id": "leonids", "nameTr": "Leonidler", "nameLatin": "Leonids", "radiantTr": "Aslan (Leo)", "peakMonth": 11, "peakDay": 17, "zhr": 15 },
+  { "id": "geminids", "nameTr": "Geminidler", "nameLatin": "Geminids", "radiantTr": "İkizler (Gemini)", "peakMonth": 12, "peakDay": 14, "zhr": 150 },
+  { "id": "ursids", "nameTr": "Ursidler", "nameLatin": "Ursids", "radiantTr": "Küçük Ayı (Ursa Minor)", "peakMonth": 12, "peakDay": 22, "zhr": 10 }
+]

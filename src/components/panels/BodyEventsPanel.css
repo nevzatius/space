@@ -1,0 +1,33 @@
+.body-events h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  color: #cdd;
+}
+
+.body-events__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.body-events__table th,
+.body-events__table td {
+  text-align: left;
+  padding: 0.3rem 0.4rem;
+  border-bottom: 1px solid #2a2e3a;
+  color: #ddd;
+}
+
+.body-events__table th {
+  color: #99a;
+  font-weight: 500;
+}
+
+.body-events__dir {
+  color: #8aa;
+  font-size: 0.8em;
+}
+
+.body-events__visible-badge {
+  font-size: 0.8em;
+}

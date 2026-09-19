@@ -1,0 +1,36 @@
+.app-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.app-layout__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  max-height: calc(100vh - 90px);
+}
+
+.app-layout__main {
+  min-height: 420px;
+  display: flex;
+}
+
+.app-layout__main > * {
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .app-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .app-layout__sidebar {
+    max-height: none;
+    overflow-y: visible;
+  }
+}

@@ -21,6 +21,11 @@
   color: #99a;
 }
 
+.app-header__location,
+.app-header__events {
+  position: relative;
+}
+
 .app-header__location-toggle {
   display: flex;
   align-items: center;

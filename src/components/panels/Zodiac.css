@@ -1,0 +1,11 @@
+.zodiac-panel h3 { margin: 0 0 .5rem; font-size: .95rem; }
+.zodiac-note { color: #8e9bb4; font-size: .7rem; line-height: 1.5; margin: .5rem 0; }
+.zodiac-panel__form { display: flex; gap: .5rem; margin: .6rem 0; }
+.zodiac-panel__form input[type="date"] { flex: 1; padding: .45rem .6rem; border-radius: 6px; border: 1px solid #34415c; background: #101725; color: #dce6fa; font-size: .8rem; }
+.zodiac-panel__form button { border: 1px solid #36435b; border-radius: 6px; background: #1c2536; color: #c4d6fc; padding: .45rem .8rem; cursor: pointer; font-size: .8rem; }
+.zodiac-panel__notice { margin-top: .6rem; padding: .7rem; border: 1px solid #2c3448; border-radius: 8px; background: #121a2a; }
+.zodiac-panel__row { display: flex; justify-content: space-between; align-items: center; font-size: .85rem; padding: .3rem 0; color: #b8c7e2; }
+.zodiac-panel__row--astro strong { color: #94c9bd; }
+.zodiac-panel__label { color: #8797b4; font-size: .75rem; }
+.zodiac-panel__ophiuchus { color: #79b4ac; font-size: .78rem; margin: .4rem 0; }
+.zodiac-panel__show-in-sky { margin-top: .4rem; border: 1px solid #36435b; border-radius: 6px; background: #1c2536; color: #c4d6fc; padding: .4rem .6rem; cursor: pointer; font-size: .75rem; }

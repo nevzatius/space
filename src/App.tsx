@@ -11,6 +11,7 @@ import { useNow } from './hooks/useNow';
 import { AstroProvider } from './hooks/useAstroState';
 import { Timeline } from './components/datetime/Timeline';
 import { ObservationPanel } from './components/panels/ObservationPanel';
+import { ZodiacPanel } from './components/panels/ZodiacPanel';
 import { useTranslation } from './i18n/useTranslation';
 import './App.css';
 
@@ -39,6 +40,7 @@ function App() {
               <BodyEventsPanel />
             </div>
             <div className="card"><ObservationPanel /></div>
+            <div className="card"><ZodiacPanel /></div>
             <div className="card">
               <ConstellationsPanel />
             </div>

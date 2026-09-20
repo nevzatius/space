@@ -10,6 +10,7 @@ import { SkyViewer } from './components/sky/SkyViewer';
 import { useNow } from './hooks/useNow';
 import { AstroProvider } from './hooks/useAstroState';
 import { Timeline } from './components/datetime/Timeline';
+import { ObservationPanel } from './components/panels/ObservationPanel';
 import { useTranslation } from './i18n/useTranslation';
 import './App.css';
 
@@ -37,6 +38,7 @@ function App() {
             <div className="card">
               <BodyEventsPanel />
             </div>
+            <div className="card"><ObservationPanel /></div>
             <div className="card">
               <ConstellationsPanel />
             </div>

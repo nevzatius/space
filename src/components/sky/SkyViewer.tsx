@@ -26,6 +26,8 @@ import { HeadingTracker } from './HeadingTracker';
 import { SkyDome } from './SkyDome';
 import { SunLight } from './SunLight';
 import './SkyViewer.css';
+import { ObjectSearch } from './ObjectSearch';
+import { ObjectFocusController } from './ObjectFocusController';
 
 interface BodyHoverInfo {
   label: string;
@@ -48,6 +50,7 @@ export function SkyViewer() {
   const setSelectedConstellation = useAppStore((s) => s.setSelectedConstellation);
   const showSatellites = useAppStore((s) => s.showSatellites);
   const showStars = useAppStore((s) => s.showStars);
+  const focusRequest = useAppStore((s) => s.focusRequest);
 
   const [hoverConstellation, setHoverConstellation] = useState<ConstellationHoverInfo | null>(null);
   const [hoverBody, setHoverBody] = useState<BodyHoverInfo | null>(null);
@@ -57,6 +60,13 @@ export function SkyViewer() {
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const deviceOrientation = useDeviceOrientation();
+  const disableOrientation = deviceOrientation.disable;
+  const focusId = focusRequest?.id ?? 0;
+  useEffect(() => {
+    if (!focusId) return;
+    setApproachMoon(false);
+    disableOrientation();
+  }, [focusId, disableOrientation]);
 
   const zoomIn = () => setFov((f) => clampFov(f - ZOOM_STEP));
   const zoomOut = () => setFov((f) => clampFov(f + ZOOM_STEP));
@@ -65,6 +75,7 @@ export function SkyViewer() {
     const el = containerRef.current;
     if (!el) return undefined;
     const handleWheel = (e: WheelEvent) => {
+      if (e.target instanceof Element && e.target.closest('.object-search')) return;
       e.preventDefault();
       setFov((f) => clampFov(f + e.deltaY * WHEEL_ZOOM_FACTOR));
     };
@@ -169,12 +180,13 @@ export function SkyViewer() {
           <SatelliteMarker key={s.noradId} satellite={s} onHover={handleBodyHover} onHoverEnd={handleBodyHoverEnd} />
         ))}
 
-        <MoonApproachController active={approachMoon} moonPosition={moonPosition} controlsRef={controlsRef} />
+        <MoonApproachController cancelToken={focusId} active={approachMoon} moonPosition={moonPosition} controlsRef={controlsRef} />
         <DeviceOrientationController
           active={deviceOrientation.active}
           directionRef={deviceOrientation.directionRef}
           controlsRef={controlsRef}
         />
+        <ObjectFocusController controlsRef={controlsRef} />
         <OrbitControls
           ref={controlsRef}
           makeDefault
@@ -187,6 +199,7 @@ export function SkyViewer() {
           maxPolarAngle={Math.PI}
         />
       </Canvas>
+      <ObjectSearch />
 
       <CompassHud headingDeg={heading} />
       <ZoomControls onZoomIn={zoomIn} onZoomOut={zoomOut} canZoomIn={fov > MIN_FOV} canZoomOut={fov < MAX_FOV} />

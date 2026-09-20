@@ -1,0 +1,11 @@
+.object-search { position: absolute; top: 14px; left: 14px; width: min(270px, calc(100% - 155px)); z-index: 6; }
+.object-search input { width: 100%; box-sizing: border-box; border: 1px solid #3a4863; border-radius: 7px; padding: .6rem .7rem; background: #101725ed; color: #dce6fa; font-size: .75rem; }
+.object-search input::placeholder { color: #a0aec7; }
+.object-search__results, .object-search__notice { margin-top: .35rem; background: #121a2af5; border: 1px solid #34415c; border-radius: 7px; color: #cbd7ef; }
+.object-search__results { max-height: 230px; overflow-y: auto; }
+.object-search__results button { display: flex; justify-content: space-between; gap: .5rem; width: 100%; background: transparent; color: #dce6fa; border: 0; padding: .65rem; text-align: left; cursor: pointer; font-size: .8rem; }
+.object-search__results button:hover, .object-search__results button:focus-visible { background: #293650; }
+.object-search__results small { color: #9aaccb; white-space: nowrap; }
+.object-search__results p, .object-search__notice { font-size: .72rem; padding: .6rem; }
+.object-search__notice button { background: transparent; color: #b7c8e7; border: 0; cursor: pointer; float: right; }
+@media (max-width: 640px) { .object-search { left: 10px; top: 10px; width: calc(100% - 145px); } }

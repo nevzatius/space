@@ -29,10 +29,12 @@ export function MoonApproachController({
   active,
   moonPosition,
   controlsRef,
+  cancelToken = 0,
 }: {
   active: boolean;
   moonPosition: [number, number, number] | null;
   controlsRef: React.RefObject<OrbitControlsImpl | null>;
+  cancelToken?: number;
 }) {
   const { camera } = useThree();
   const phase = useRef<Phase>('idle');
@@ -40,8 +42,14 @@ export function MoonApproachController({
   const fromPos = useRef(new THREE.Vector3());
   const fromTarget = useRef(new THREE.Vector3());
   const lastMoonPos = useRef(new THREE.Vector3());
+  const lastCancelToken = useRef(cancelToken);
 
   useEffect(() => {
+    if (lastCancelToken.current !== cancelToken) {
+      lastCancelToken.current = cancelToken;
+      phase.current = 'idle';
+      return;
+    }
     const controls = controlsRef.current;
     if (!controls) return;
     if (active && phase.current !== 'in' && phase.current !== 'docked') {
@@ -56,7 +64,7 @@ export function MoonApproachController({
       phase.current = 'out';
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
+  }, [active, cancelToken]);
 
   useFrame((_, delta) => {
     const controls = controlsRef.current;

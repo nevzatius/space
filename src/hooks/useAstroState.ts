@@ -15,6 +15,7 @@ import {
 } from '../lib/astro';
 import { getLocalDayStartUtc } from '../lib/timezone';
 import { getBortleClass } from '../lib/lightPollution';
+import { buildObservationPlan, observingNightStart } from '../lib/observation';
 import { constellations, stars } from '../lib/starCatalog';
 import type { BodyPosition, ConstellationSegment, HorizontalCoords } from '../types/astronomy';
 
@@ -33,6 +34,11 @@ function useComputedAstroState() {
   const observer = useMemo(() => makeObserver(location), [location.lat, location.lon]);
 
   const lightPollution = useMemo(() => getBortleClass(location.lat, location.lon), [location.lat, location.lon]);
+  const nightStart = observingNightStart(dateTimeUtc, timeZone);
+  const observationPlan = useMemo(
+    () => buildObservationPlan(nightStart, timeZone, { lat: location.lat, lon: location.lon }, lightPollution.limitingMagnitude),
+    [nightStart, timeZone, location.lat, location.lon, lightPollution.limitingMagnitude],
+  );
 
   const moonPhase = useMemo(() => getMoonPhase(dateTimeUtc), [dateTimeUtc]);
 
@@ -94,6 +100,7 @@ function useComputedAstroState() {
   );
 
   return {
+    observationPlan,
     observer,
     lightPollution,
     moonPhase,

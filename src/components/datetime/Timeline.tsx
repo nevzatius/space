@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { useAppStore } from '../../state/appStore';
 import { useAstroState } from '../../hooks/useAstroState';
 import './Timeline.css';
+import { ObservationTimeline } from '../panels/ObservationTimeline';
 
 const NIGHT_COLOR = '#0b0f19';
 const DAY_COLOR = '#2c3a63';
@@ -116,6 +117,7 @@ export function Timeline() {
           {live ? label('Canlı', 'Live') : label('Şimdiye dön', 'Back to now')}
         </button>
       </div>
+      <ObservationTimeline />
     </section>
   );
 }

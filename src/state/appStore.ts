@@ -16,6 +16,8 @@ function detectInitialLanguage(): Language {
 }
 
 interface AppState {
+  focusRequest: { altitude: number; azimuth: number; id: number } | null;
+  focusObject: (altitude: number, azimuth: number) => void;
   location: GeoLocation;
   locationSource: LocationSource;
   timeZone: string;
@@ -43,6 +45,8 @@ interface AppState {
 const defaultLocation: GeoLocation = { lat: 41.0082, lon: 28.9784, label: 'İstanbul, Türkiye' };
 
 export const useAppStore = create<AppState>((set) => ({
+  focusRequest: null,
+  focusObject: (altitude, azimuth) => set((state) => ({ focusRequest: { altitude, azimuth, id: (state.focusRequest?.id ?? 0) + 1 } })),
   location: defaultLocation,
   locationSource: 'manual',
   timeZone: resolveTimeZone(defaultLocation.lat, defaultLocation.lon),

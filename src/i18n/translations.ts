@@ -77,6 +77,14 @@ export interface TranslationDict {
     zoomIn: string;
     zoomOut: string;
   };
+  compassMode: {
+    enable: string;
+    disable: string;
+    requesting: string;
+    permissionDenied: string;
+    unsupported: string;
+    sensorUnavailable: string;
+  };
   language: {
     switchTo: string;
   };
@@ -162,6 +170,14 @@ const translations: Record<Language, TranslationDict> = {
       zoomIn: 'Yakınlaştır',
       zoomOut: 'Uzaklaştır',
     },
+    compassMode: {
+      enable: 'Pusula Modu',
+      disable: 'Pusulayı Kapat',
+      requesting: 'İzin isteniyor…',
+      permissionDenied: 'Cihaz yönü izni reddedildi.',
+      unsupported: 'Bu cihaz pusula modunu desteklemiyor.',
+      sensorUnavailable: 'Sensör verisi alınamadı, sürükleme moduna dönülüyor.',
+    },
     language: {
       switchTo: 'Switch to English',
     },
@@ -244,6 +260,14 @@ const translations: Record<Language, TranslationDict> = {
     zoom: {
       zoomIn: 'Zoom in',
       zoomOut: 'Zoom out',
+    },
+    compassMode: {
+      enable: 'Compass Mode',
+      disable: 'Disable Compass',
+      requesting: 'Requesting permission…',
+      permissionDenied: 'Device orientation permission denied.',
+      unsupported: "This device doesn't support compass mode.",
+      sensorUnavailable: 'No sensor data received, falling back to drag mode.',
     },
     language: {
       switchTo: 'Türkçe\'ye geç',

@@ -4,6 +4,7 @@ import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { useAstroState } from '../../hooks/useAstroState';
 import { useSatellites } from '../../hooks/useSatellites';
+import { useDeviceOrientation } from '../../hooks/useDeviceOrientation';
 import { useAppStore } from '../../state/appStore';
 import { altAzToCartesian } from '../../lib/coords';
 import { getAmbientIntensity } from '../../lib/skyPhysics';
@@ -14,6 +15,8 @@ import { SatelliteMarker } from './SatelliteMarker';
 import { MoonMesh, MOON_DISTANCE } from './MoonMesh';
 import { MoonApproachController } from './MoonApproachController';
 import { MoonApproachButton } from './MoonApproachButton';
+import { DeviceOrientationController } from './DeviceOrientationController';
+import { CompassModeButton } from './CompassModeButton';
 import { SkyPath } from './SkyPath';
 import { HorizonGround } from './HorizonGround';
 import { CompassLabels } from './CompassLabels';
@@ -53,6 +56,7 @@ export function SkyViewer() {
   const [approachMoon, setApproachMoon] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
+  const deviceOrientation = useDeviceOrientation();
 
   const zoomIn = () => setFov((f) => clampFov(f - ZOOM_STEP));
   const zoomOut = () => setFov((f) => clampFov(f + ZOOM_STEP));
@@ -84,6 +88,12 @@ export function SkyViewer() {
   useEffect(() => {
     if (approachMoon && (!moon || moon.altitude < -5)) setApproachMoon(false);
   }, [approachMoon, moon]);
+
+  // Compass mode and Moon-approach both take over the camera directly; keep
+  // them mutually exclusive so they don't fight each other's positioning.
+  useEffect(() => {
+    if (deviceOrientation.active) setApproachMoon(false);
+  }, [deviceOrientation.active]);
 
   const sunAltitude = sun?.altitude ?? -90;
   const sunAzimuth = sun?.azimuth ?? 0;
@@ -160,12 +170,18 @@ export function SkyViewer() {
         ))}
 
         <MoonApproachController active={approachMoon} moonPosition={moonPosition} controlsRef={controlsRef} />
+        <DeviceOrientationController
+          active={deviceOrientation.active}
+          directionRef={deviceOrientation.directionRef}
+          controlsRef={controlsRef}
+        />
         <OrbitControls
           ref={controlsRef}
           makeDefault
           target={[0, 0, 0]}
           enablePan={false}
           enableZoom={false}
+          enableRotate={!deviceOrientation.active}
           rotateSpeed={-0.4}
           minPolarAngle={0}
           maxPolarAngle={Math.PI}
@@ -176,8 +192,17 @@ export function SkyViewer() {
       <ZoomControls onZoomIn={zoomIn} onZoomOut={zoomOut} canZoomIn={fov > MIN_FOV} canZoomOut={fov < MAX_FOV} />
       <MoonApproachButton
         active={approachMoon}
-        disabled={!moon || moon.altitude < -5}
+        disabled={!moon || moon.altitude < -5 || deviceOrientation.active}
         onToggle={() => setApproachMoon((v) => !v)}
+      />
+      <CompassModeButton
+        supported={deviceOrientation.supported}
+        active={deviceOrientation.active}
+        requesting={deviceOrientation.requesting}
+        disabled={approachMoon}
+        error={deviceOrientation.error}
+        onEnable={deviceOrientation.enable}
+        onDisable={deviceOrientation.disable}
       />
 
       {tooltip && (

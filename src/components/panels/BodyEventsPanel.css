@@ -4,10 +4,26 @@
   color: #cdd;
 }
 
+.body-events__table-wrap {
+  overflow-x: auto;
+}
+
 .body-events__table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
+}
+
+@media (max-width: 480px) {
+  .body-events__table {
+    font-size: 0.78rem;
+  }
+
+  .body-events__table th,
+  .body-events__table td {
+    padding: 0.25rem 0.3rem;
+    white-space: nowrap;
+  }
 }
 
 .body-events__table th,

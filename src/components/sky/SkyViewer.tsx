@@ -44,6 +44,7 @@ export function SkyViewer() {
   const selectedConstellation = useAppStore((s) => s.selectedConstellation);
   const setSelectedConstellation = useAppStore((s) => s.setSelectedConstellation);
   const showSatellites = useAppStore((s) => s.showSatellites);
+  const showStars = useAppStore((s) => s.showStars);
 
   const [hoverConstellation, setHoverConstellation] = useState<ConstellationHoverInfo | null>(null);
   const [hoverBody, setHoverBody] = useState<BodyHoverInfo | null>(null);
@@ -112,7 +113,7 @@ export function SkyViewer() {
         <SunLight direction={sunDirection} altitude={sunAltitude} />
 
         <SkyDome lightPollution={lightPollution} sunDirection={sunDirection} sunAltitude={sunAltitude} milkyWay={galacticPlane} />
-        <StarField stars={starsHorizontal} sunAltitude={sunAltitude} />
+        {showStars && <StarField stars={starsHorizontal} sunAltitude={sunAltitude} />}
         <ConstellationLines
           constellations={constellationLines}
           selectedCode={selectedConstellation}

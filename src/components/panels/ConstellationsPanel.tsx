@@ -8,11 +8,19 @@ export function ConstellationsPanel() {
   const { visibleConstellations, lightPollution } = useAstroState();
   const selectedConstellation = useAppStore((s) => s.selectedConstellation);
   const setSelectedConstellation = useAppStore((s) => s.setSelectedConstellation);
+  const showStars = useAppStore((s) => s.showStars);
+  const setShowStars = useAppStore((s) => s.setShowStars);
   const { t, language } = useTranslation();
 
   return (
     <div className="constellations-panel">
-      <h3>{t.constellations.title}</h3>
+      <div className="constellations-panel__header">
+        <h3>{t.constellations.title}</h3>
+        <label className="constellations-panel__toggle">
+          <input type="checkbox" checked={showStars} onChange={(e) => setShowStars(e.target.checked)} />
+          {t.constellations.showStars}
+        </label>
+      </div>
       <p className="constellations-panel__subtitle">
         {t.constellations.subtitle(lightPollution.bortle, lightPollution.limitingMagnitude.toFixed(1))}
       </p>

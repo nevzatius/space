@@ -63,3 +63,30 @@
 .app-header__lang-toggle:hover {
   background: #20232c;
 }
+
+@media (max-width: 640px) {
+  .app-header {
+    padding: 0.6rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .app-header__title {
+    flex: 1 1 100%;
+  }
+
+  .app-header__location,
+  .app-header__events {
+    /* Let dropdowns anchor to the full-width header instead of these narrow
+       button wrappers, so they don't get pushed off-screen when the buttons
+       wrap onto their own row on a small screen. */
+    position: static;
+  }
+
+  .app-header__location-toggle,
+  .app-header__lang-toggle {
+    white-space: normal;
+    text-align: left;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+}

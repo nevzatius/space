@@ -39,3 +39,11 @@
   opacity: 0.35;
   cursor: default;
 }
+
+@media (max-width: 640px), (pointer: coarse) {
+  .zoom-controls__btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.4rem;
+  }
+}

@@ -44,6 +44,7 @@ export interface TranslationDict {
     subtitle: (bortle: number, mag: string) => string;
     empty: string;
     altitude: string;
+    showStars: string;
   };
   moonPhase: {
     illumination: string;
@@ -128,6 +129,7 @@ const translations: Record<Language, TranslationDict> = {
         `Bortle ${bortle} ışık kirliliğinde, ~${mag} kadre kadar çıplak gözle görülebilecekler`,
       empty: 'Şu an ufkun üzerinde belirgin bir takımyıldız yok.',
       altitude: 'yükseklik',
+      showStars: 'Yıldızları göster',
     },
     moonPhase: {
       illumination: 'aydınlanma',
@@ -210,6 +212,7 @@ const translations: Record<Language, TranslationDict> = {
         `Under Bortle ${bortle} light pollution, visible down to magnitude ~${mag} with the naked eye`,
       empty: 'No prominent constellation is above the horizon right now.',
       altitude: 'altitude',
+      showStars: 'Show stars',
     },
     moonPhase: {
       illumination: 'illuminated',

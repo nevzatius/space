@@ -24,7 +24,9 @@ export function SatelliteMarker({
 
   const scale = satellite.currentlyVisible ? 2.2 : 1.1;
   const opacity = satellite.currentlyVisible ? 1 : 0.35;
-  const color = satellite.currentlyVisible ? '#fffbe0' : '#9aa4b8';
+  // Turquoise/cyan instead of star-white so satellites read as distinct from
+  // the background star field at a glance.
+  const color = satellite.currentlyVisible ? '#2be8d8' : '#3f8a8c';
 
   return (
     <sprite

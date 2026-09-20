@@ -34,3 +34,14 @@
     overflow-y: visible;
   }
 }
+
+@media (max-width: 640px) {
+  .app-layout {
+    padding: 0.6rem;
+    gap: 0.6rem;
+  }
+
+  .app-layout__main {
+    min-height: 320px;
+  }
+}

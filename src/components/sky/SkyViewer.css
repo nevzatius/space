@@ -6,6 +6,13 @@
   border-radius: 8px;
   overflow: hidden;
   background: #05070d;
+  touch-action: none;
+}
+
+@media (max-width: 640px) {
+  .sky-viewer {
+    min-height: 320px;
+  }
 }
 
 .sky-viewer__tooltip {

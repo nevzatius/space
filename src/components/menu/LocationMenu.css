@@ -102,3 +102,12 @@
 .location-menu__close:hover {
   background: #20232c;
 }
+
+@media (max-width: 640px) {
+  .location-menu {
+    left: 0.75rem;
+    right: 0.75rem;
+    width: auto;
+    max-width: none;
+  }
+}

@@ -24,6 +24,7 @@ interface AppState {
   useLiveNow: boolean;
   selectedConstellation: string | null;
   showSatellites: boolean;
+  showStars: boolean;
   language: Language;
   setLocation: (location: GeoLocation, source?: LocationSource) => void;
   setTimeZone: (zone: string) => void;
@@ -31,6 +32,7 @@ interface AppState {
   setUseLiveNow: (value: boolean) => void;
   setSelectedConstellation: (code: string | null) => void;
   setShowSatellites: (value: boolean) => void;
+  setShowStars: (value: boolean) => void;
   setLanguage: (language: Language) => void;
 }
 
@@ -45,6 +47,7 @@ export const useAppStore = create<AppState>((set) => ({
   useLiveNow: true,
   selectedConstellation: null,
   showSatellites: true,
+  showStars: true,
   language: detectInitialLanguage(),
   setLocation: (location, source = 'manual') =>
     set((state) => ({
@@ -57,6 +60,7 @@ export const useAppStore = create<AppState>((set) => ({
   setUseLiveNow: (value) => set({ useLiveNow: value, ...(value ? { dateTimeUtc: new Date() } : {}) }),
   setSelectedConstellation: (code) => set({ selectedConstellation: code }),
   setShowSatellites: (value) => set({ showSatellites: value }),
+  setShowStars: (value) => set({ showStars: value }),
   setLanguage: (language) => {
     try {
       localStorage.setItem(LANGUAGE_STORAGE_KEY, language);

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { createContext, createElement, useContext, useMemo, type ReactNode } from 'react';
 import { useAppStore } from '../state/appStore';
 import {
   TRACKED_BODIES,
@@ -25,7 +25,7 @@ export interface ConstellationRenderData {
   linesHorizontal: ConstellationSegment[];
 }
 
-export function useAstroState() {
+function useComputedAstroState() {
   const location = useAppStore((s) => s.location);
   const timeZone = useAppStore((s) => s.timeZone);
   const dateTimeUtc = useAppStore((s) => s.dateTimeUtc);
@@ -74,21 +74,23 @@ export function useAstroState() {
     [bodyPositions, lightPollution.limitingMagnitude],
   );
 
+  const dayStartMs = getLocalDayStartUtc(dateTimeUtc, timeZone).getTime();
   const riseSet = useMemo(() => {
-    const dayStartUtc = getLocalDayStartUtc(dateTimeUtc, timeZone);
+    const dayStartUtc = new Date(dayStartMs);
     return TRACKED_BODIES.map((body) => getDayRiseSet(body, dayStartUtc, observer));
-  }, [dateTimeUtc, timeZone, observer]);
+  }, [dayStartMs, observer]);
 
   // Where the Moon and Sun are headed: sampled positions for the next 24h, used to
   // draw their upcoming paths across the sky dome.
+  const pathTimeMs = Math.floor(dateTimeUtc.getTime() / 300_000) * 300_000;
   const moonPath: HorizontalCoords[] = useMemo(
-    () => getUpcomingPath('Moon', dateTimeUtc, observer),
-    [dateTimeUtc, observer],
+    () => getUpcomingPath('Moon', new Date(pathTimeMs), observer),
+    [pathTimeMs, observer],
   );
 
   const sunPath: HorizontalCoords[] = useMemo(
-    () => getUpcomingPath('Sun', dateTimeUtc, observer),
-    [dateTimeUtc, observer],
+    () => getUpcomingPath('Sun', new Date(pathTimeMs), observer),
+    [pathTimeMs, observer],
   );
 
   return {
@@ -106,4 +108,16 @@ export function useAstroState() {
     moonPath,
     sunPath,
   };
+}
+
+const AstroContext = createContext<ReturnType<typeof useComputedAstroState> | null>(null);
+
+export function AstroProvider({ children }: { children: ReactNode }) {
+  return createElement(AstroContext.Provider, { value: useComputedAstroState() }, children);
+}
+
+export function useAstroState() {
+  const state = useContext(AstroContext);
+  if (!state) throw new Error('useAstroState requires AstroProvider');
+  return state;
 }

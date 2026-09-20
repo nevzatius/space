@@ -8,6 +8,8 @@ import { ConstellationsPanel } from './components/panels/ConstellationsPanel';
 import { SatellitesPanel } from './components/panels/SatellitesPanel';
 import { SkyViewer } from './components/sky/SkyViewer';
 import { useNow } from './hooks/useNow';
+import { AstroProvider } from './hooks/useAstroState';
+import { Timeline } from './components/datetime/Timeline';
 import { useTranslation } from './i18n/useTranslation';
 import './App.css';
 
@@ -21,7 +23,7 @@ function App() {
   }, [language, t]);
 
   return (
-    <div className="app-shell">
+    <AstroProvider><div className="app-shell">
       <Header />
       <ResponsiveLayout
         sidebar={
@@ -43,9 +45,9 @@ function App() {
             </div>
           </>
         }
-        main={<SkyViewer />}
+        main={<div className="sky-stage"><SkyViewer /><Timeline /></div>}
       />
-    </div>
+    </div></AstroProvider>
   );
 }
 

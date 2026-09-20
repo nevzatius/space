@@ -22,6 +22,10 @@ interface AppState {
   tzManuallySet: boolean;
   dateTimeUtc: Date;
   useLiveNow: boolean;
+  playbackRate: number;
+  playing: boolean;
+  setPlaying: (playing: boolean) => void;
+  setPlaybackRate: (rate: number) => void;
   selectedConstellation: string | null;
   showSatellites: boolean;
   showStars: boolean;
@@ -45,6 +49,10 @@ export const useAppStore = create<AppState>((set) => ({
   tzManuallySet: false,
   dateTimeUtc: new Date(),
   useLiveNow: true,
+  playbackRate: 600,
+  playing: false,
+  setPlaying: (playing) => set({ playing, useLiveNow: false }),
+  setPlaybackRate: (playbackRate) => set({ playbackRate }),
   selectedConstellation: null,
   showSatellites: true,
   showStars: true,
@@ -56,8 +64,8 @@ export const useAppStore = create<AppState>((set) => ({
       timeZone: state.tzManuallySet ? state.timeZone : resolveTimeZone(location.lat, location.lon),
     })),
   setTimeZone: (zone) => set({ timeZone: zone, tzManuallySet: true }),
-  setDateTimeUtc: (date) => set({ dateTimeUtc: date, useLiveNow: false }),
-  setUseLiveNow: (value) => set({ useLiveNow: value, ...(value ? { dateTimeUtc: new Date() } : {}) }),
+  setDateTimeUtc: (date) => set({ dateTimeUtc: date, useLiveNow: false, playing: false }),
+  setUseLiveNow: (value) => set({ useLiveNow: value, playing: false, ...(value ? { dateTimeUtc: new Date() } : {}) }),
   setSelectedConstellation: (code) => set({ selectedConstellation: code }),
   setShowSatellites: (value) => set({ showSatellites: value }),
   setShowStars: (value) => set({ showStars: value }),
